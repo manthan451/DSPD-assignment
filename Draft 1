@@ -1,1 +1,88 @@
 #include <stdio.h>
+#define SIZE 100
+#define MON 30
+enum stat{urban,rural};
+struct station
+{
+  int stat_number;
+  struct urb_param up;
+  struct weath_param wp[MON];
+};
+
+struct urb_param
+{
+  int status;
+  float sky_vf;
+  float veg_dens;
+  int popl_dens;
+  float perv_sf;
+  float imperv_sf;
+  float dist[SIZE];
+};
+struct weath_param
+{
+  float temperature;
+  float rel_humid;
+};
+
+
+void main()
+{
+  int n;
+  printf("Input number of regions");
+  scanf("%d",&n);
+  struct station s[n];
+  long float temp_sum=0;
+  for(int i = 0; i < n; i++)
+  {
+    printf("For station %d\n",i+1);
+    s[i].stat_number = i+1;
+    printf("Input status, 0 for urban and 1 for rural:");
+    scanf("%d",&s[i].up.status);
+    printf("Input sky view factor:");
+    scanf("%f",&s[i].up.sky_vf);
+    printf("Input vegetation density:");
+    scanf("%f",&s[i].up.veg_dens);
+    printf("Input Population density:");
+    scanf("%d",&s[i].up.popl_dens);
+    printf("Input pervious surface friction");
+    scanf("%f",&s[i].up.perv_sf);
+    printf("Input impervious surface friction");
+    scanf("%f",&s[i].up.imperv_sf);
+    for(int j = 0; j < n; j++)
+    {
+      if( j > i)
+      {
+          printf("Input distance from station %d", j+1);
+          scanf("%f",s[i].up.dist[j]);
+      }
+      else if( j < i)
+      {
+        s[i].up.dist[j] = s[j].up.dist[i];
+      }
+      else
+      {
+        s[i].up.dist[j] = 0;
+      }
+    }
+    for( int k = 0; k < MON; k++)
+    {
+      printf("For day %d\n",k+1);
+      printf("Input air temperature:");
+      scanf("%f",&s[i].wp[k].temperature);
+      temp_sum = temp_sum + s[i].wp[k].temperature;
+      printf("Input Relative Humidity:");
+      scanf("%f"&s[i].wp[k].rel_humid);
+    }
+  }
+  float avg_city_temp = temp_sum/(n*MON);
+  
+  
+  
+        
+
+
+    
+
+  
+  
