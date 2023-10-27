@@ -33,6 +33,7 @@ void main()
   scanf("%d",&n);
   struct station s[n];
   long float temp_sum=0;
+  void Query3 ( struct station s[],int n, float avg_city_temp);
   for(int i = 0; i < n; i++)
   {
     printf("For station %d\n",i+1);
@@ -77,6 +78,36 @@ void main()
   }
   float avg_city_temp = temp_sum/(n*MON);
   
+
+}
+
+void Query3 ( struct station s[],int n, float avg_city_temp)
+{
+  int i,j,k,loc;
+  struct station temp;
+  for (i=0; i<=n-2;i++)
+    {
+      loc=i;
+      for (j=i+1; j<n; j++)
+        {
+          if( s[j].up.veg_dens< s[loc].up.veg_dens )
+            {
+              loc=j;
+            }
+         }
+       temp= s[loc];
+       s[loc]= s[i];
+       s[i]=temp;
+       printf("station no %d\n", s[i].stat_number );
+       for (k=0; k<MON; k++)
+         {
+           if (s[i].wp[k].temperature > avg_city_temp )
+             printf("day %d\n", k);
+         }
+    }
+}
+
+
   
   
         
