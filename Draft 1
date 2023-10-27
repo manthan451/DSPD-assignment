@@ -2,13 +2,6 @@
 #define SIZE 100
 #define MON 30
 enum stat{urban,rural};
-struct station
-{
-  int stat_number;
-  struct urb_param up;
-  struct weath_param wp[MON];
-};
-
 struct urb_param
 {
   int status;
@@ -19,10 +12,18 @@ struct urb_param
   float imperv_sf;
   float dist[SIZE];
 };
+
 struct weath_param
 {
   float temperature;
   float rel_humid;
+};
+
+struct station
+{
+  int stat_number;
+  struct urb_param up;
+  struct weath_param wp[MON];
 };
 
 
@@ -73,7 +74,7 @@ void main()
       scanf("%f",&s[i].wp[k].temperature);
       temp_sum = temp_sum + s[i].wp[k].temperature;
       printf("Input Relative Humidity:");
-      scanf("%f"&s[i].wp[k].rel_humid);
+      scanf("%f", &s[i].wp[k].rel_humid);
     }
   }
   float avg_city_temp = temp_sum/(n*MON);
