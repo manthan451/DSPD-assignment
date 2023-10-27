@@ -39,23 +39,23 @@ void main()
   {
     printf("For station %d\n",i+1);
     s[i].stat_number = i+1;
-    printf("Input status, 0 for urban and 1 for rural:");
+    printf("Input status, 0 for urban and 1 for rural: ");
     scanf("%d",&s[i].up.status);
-    printf("Input sky view factor:");
+    printf("Input sky view factor: ");
     scanf("%f",&s[i].up.sky_vf);
-    printf("Input vegetation density:");
+    printf("Input vegetation density: ");
     scanf("%f",&s[i].up.veg_dens);
-    printf("Input Population density:");
+    printf("Input Population density: ");
     scanf("%d",&s[i].up.popl_dens);
-    printf("Input pervious surface friction");
+    printf("Input pervious surface friction: ");
     scanf("%f",&s[i].up.perv_sf);
-    printf("Input impervious surface friction");
+    printf("Input impervious surface friction: ");
     scanf("%f",&s[i].up.imperv_sf);
     for(int j = 0; j < n; j++)
     {
       if( j > i)
       {
-          printf("Input distance from station %d", j+1);
+          printf("Input distance from station %d; ", j+1);
           scanf("%f",s[i].up.dist[j]);
       }
       else if( j < i)
