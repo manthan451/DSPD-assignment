@@ -125,8 +125,29 @@ int nearest_rural( station urb, station s[], n, k)
   return min_rural;
 }
 
-void Query2( station urb, station s[], n)
+void Query1 ( station s[],int n, float avg_city_temp)
 {
+  int HDDcount[n];
+  int max,i,j,count;
+  max=0;
+  for (i=0; i<n; i++)
+   {
+     count=0;
+     for (j=0; j<MON; j++)
+       {
+         if(s[i].wp[j].temperature > avg_city_temp)
+            count++;
+       }
+  HDDcount[i]=count;
+  if (count>max)
+     max=count;
+  }
+ for(i=0;i<n; i++)
+  {
+    if(HDDcount[i]==max)
+      printf("station no with highest heat deg days is:%d\n", i+1);
+  }
+}
   
       
   
