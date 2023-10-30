@@ -8,7 +8,7 @@ struct urb_param
   int status;
   float sky_vf;
   float veg_dens;
-  int popl_dens;
+  float popl_dens;
   float perv_sf;
   float imperv_sf;
   float dist[SIZE];
@@ -47,7 +47,7 @@ void main()
     printf("Input vegetation density: ");
     scanf("%f",&s[i].up.veg_dens);
     printf("Input Population density: ");
-    scanf("%d",&s[i].up.popl_dens);
+    scanf("%f",&s[i].up.popl_dens);
     printf("Input pervious surface friction: ");
     scanf("%f",&s[i].up.perv_sf);
     printf("Input impervious surface friction: ");
@@ -125,7 +125,7 @@ int nearest_rural( station urb, station s[], n, k)
   return min_rural;
 }
 
-void Query3( station urb, station s[], n)
+void Query2( station urb, station s[], n)
 {
   
       
