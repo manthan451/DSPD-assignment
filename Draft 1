@@ -201,3 +201,54 @@ void Query5( station s[], int n)
       printf("%f", heat_island);
     }
   }
+
+float maxtemp (station s)
+ {
+     float maxtemp=0;
+     for (int i=0; i<MON ; i++)
+     {
+         if(s.wp[i].temperature > maxtemp)
+           {
+               maxtemp =s.wp[i].temperature;
+           }
+     }
+     return maxtemp;  
+ }
+
+void Query4 (station s[], int n , int k)
+  {
+      int i, j, loc;
+      station temp;
+      float MT;
+      for (i=0; i<k; i++)
+      {
+          loc=i;
+          MT= maxtemp(s[i]);
+          for (j=i+1; j<n; j++)
+          {
+              if (s[j].up.popl_dens == s[loc].up.popl_dens && (maxtemp(s[j]) >MT) )
+                {
+                 loc=j;
+                 MT=maxtemp(s[j]);
+                } 
+              else if (s[j].up.popl_dens < s[loc].up.popl_dens)
+               {
+                 loc=j;
+               }     
+          }
+          temp=s[loc];
+          s[loc]=s[i];
+          s[i]=temp;
+        
+      }
+      
+      for (i=0;i<k; i++)
+       {
+           printf("station no:%d, population density: %d, max temp: %f\n",s[i].stat_number, s[i].up.popl_dens, maxtemp(s[i])  );
+       }
+}
+
+
+    
+  
+
