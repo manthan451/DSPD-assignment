@@ -33,7 +33,7 @@ void main()
   printf("Input number of regions");
   scanf("%d",&n);
   struct station s[n];
-  long float temp_sum=0;
+  float temp_sum=0;
   void Query3 ( struct station s[],int n, float avg_city_temp);
   for(int i = 0; i < n; i++)
   {
@@ -56,7 +56,7 @@ void main()
       if( j > i)
       {
           printf("Input distance from station %d; ", j+1);
-          scanf("%f",s[i].up.dist[j]);
+          scanf("%f",&s[i].up.dist[j]);
       }
       else if( j < i)
       {
@@ -78,7 +78,7 @@ void main()
     }
   }
   float avg_city_temp = temp_sum/(n*MON);
-  
+  Query3( s,n, avg_city_temp);
 
 }
 
