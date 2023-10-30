@@ -2,6 +2,7 @@
 #define SIZE 100
 #define MON 30
 enum stat{urban,rural};
+typedef 
 struct urb_param
 {
   int status;
@@ -19,12 +20,12 @@ struct weath_param
   float rel_humid;
 };
 
-struct station
+typedef struct station
 {
   int stat_number;
   struct urb_param up;
   struct weath_param wp[MON];
-};
+} station;
 
 
 void main()
@@ -32,9 +33,9 @@ void main()
   int n;
   printf("Input number of regions");
   scanf("%d",&n);
-  struct station s[n];
+  station s[n];
   float temp_sum=0;
-  void Query3 ( struct station s[],int n, float avg_city_temp);
+  void Query3 ( station s[],int n, float avg_city_temp);
   for(int i = 0; i < n; i++)
   {
     printf("For station %d\n",i+1);
@@ -82,11 +83,11 @@ void main()
 
 }
 
-void Query3 ( struct station s[],int n, float avg_city_temp)
+void Query3 ( station s[],int n, float avg_city_temp)
 {
   printf("heres the answer to Query 3------------------\n");
   int i,j,k,loc;
-  struct station temp;
+  station temp;
   for (i=0; i<=n-1;i++)
     {
       loc=i;
@@ -110,7 +111,24 @@ void Query3 ( struct station s[],int n, float avg_city_temp)
     
 }
 
+int nearest_rural( station urb, station s[], n, k)
+{
+  int min_rural = 0;
+  
+  for( int i = 1; i < n; i++)
+  {
+    if( urb.urb_param.dist[i] < urb.urb_param.dist[ min_dist])
+    {
+        min_rural = i;
+    }
+  }
+  return min_rural;
+}
 
+void Query3( station urb, station s[], n)
+{
+  
+      
   
   
         
