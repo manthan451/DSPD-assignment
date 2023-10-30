@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #define SIZE 100
 #define MON 30
 enum stat{urban,rural};
@@ -22,7 +23,7 @@ struct weath_param
 typedef struct station
 {
   int stat_number;
-  struct urb_param up;
+  struct  up;
   struct weath_param wp[MON];
 } station;
 
@@ -113,15 +114,26 @@ void Query3 ( station s[],int n, float avg_city_temp)
     
 }
 
-int nearest_rural( station urb, station s[], n, k)
+int nearest_rural( station urb, station s[], int n)
 {
   int min_rural = 0;
-  
-  for( int i = 1; i < n; i++)
+  int flag = 0;
+  for( int i = 0; i < n && flag == 0; i++)
   {
-    if( urb.urb_param.dist[i] < urb.urb_param.dist[ min_dist])
+    if(s[i].up.status) 
     {
-        min_rural = i;
+      min_rural = i;
+      for(int j = i; j < n; j++)
+      {  
+          if(s[j].up.status)
+          {
+            if(urb.up.dist[j] < urb.up.dist[ min_rural]) min_rural = i;
+            else if(urb.up.dist[j] == urb.up.dist[ min_rural])
+            {
+              if( s[i].up.perv_sf > s[min_rural].up.perv_sf ) min_rural = i;
+            }
+      }
+      flag = 1;
     }
   }
   return min_rural;
@@ -151,8 +163,45 @@ void Query1 ( station s[],int n, float avg_city_temp)
   }
 }
 
+void Query2( station urb, station s[], int n)
+{
+  int min_rural = int nearest_rural( urb, s, n);
+  float temp_diff[MON];
+  temp_diff[0] = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
+  float min_temp_diff = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
+  for( int i = 1; i < MON ; i++)
+  {
+    temp_diff[i] = fabs(urb.wp[i].temperature - s[min_rural].wp[i].temperature)
+    if( min_temp_diff > temp_diff[i]) min_temp_diff = temp_diff[i];
+  }
+  for( int i = 0; i < MON; i++)
+  {
+    if( temp_diff[i] == min_temp_diff) printf("%d", i+1)
+  }
+}
 
-      
+float avg_temp( station s)
+{
+  float ans = 0;
+  for( int i = 0; i < MON; i++)
+  {
+    ans = ans + s.wp[i].temperature;
+  }
+  return ans/MON;
+}
+
+void Query5( station s[], int n)
+{
+  for( int i = 0; i < n; i++)
+  {
+    if( !s[i].up.status)
+    {
+      int nearby_rural = nearest_rural( s[i], s, n);
+      float heat_island = avg_temp( s[i] ) - avg_temp(s[nearby_rural]);
+      printf("%f", heat_island);
+    }
+  }
+
   
   
         
