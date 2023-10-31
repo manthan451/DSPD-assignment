@@ -127,10 +127,10 @@ int nearest_rural( station urb, station s[], int n)
       {  
           if(s[j].up.status)
           {
-            if(urb.up.dist[j] < urb.up.dist[ min_rural]) min_rural = i;
+            if(urb.up.dist[j] < urb.up.dist[ min_rural]) min_rural = j;
             else if(urb.up.dist[j] == urb.up.dist[ min_rural])
             {
-              if( s[i].up.perv_sf > s[min_rural].up.perv_sf ) min_rural = i;
+              if( s[i].up.perv_sf > s[min_rural].up.perv_sf ) min_rural = j;
             }
       }
       flag = 1;
