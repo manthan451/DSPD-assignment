@@ -23,7 +23,7 @@ struct weath_param
 typedef struct station
 {
   int stat_number;
-  struct  up;
+  struct urb_param up;
   struct weath_param wp[MON];
 } station;
 
