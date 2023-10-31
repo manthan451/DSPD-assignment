@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #define SIZE 100
-#define MON 30
+#define MON 3
 enum stat{urban,rural};
 struct urb_param
 {
@@ -246,8 +246,34 @@ void main()
   int m;
   scanf("%d, &m);  
   if( m == 1) 
-
+  {
+      Query1( s,n,avg_city_temp);
+  }
+  else if( m == 2)
+  {
+    printf("Input station number for thermally comfortable days:");
+    int station_no;
+    scanf("%d\n",&station_no);
+    Query2( s[station_no - 1], s, n);
+  }
+  else if( m == 3)
+  {
+    Query3( s, n, avg_city_temp);
+  }
+  else if( m == 4)
+  {
+    printf("Enter value of k:");
+    int k;
+    scanff("%d\n",&k);
+    Query4( s, n, k);
+  }
+  else if( m == 5)
+  {
+    Query5( s, n);
+  }
+  else printf("Invalid Input");
 }
+
 
 
 
