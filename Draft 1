@@ -116,7 +116,7 @@ void Query3 ( station s[],int n, float avg_city_temp)
 
 int nearest_rural( station urb, station s[], int n)
 {
-  int min_rural = 0;
+  int min_rural = -1;
   int flag = 0;
   for( int i = 0; i < n && flag == 0; i++)
   {
@@ -164,20 +164,24 @@ void Query1 ( station s[],int n, float avg_city_temp)
 }
 
 void Query2( station urb, station s[], int n)
-{
-  int min_rural = int nearest_rural( urb, s, n);
-  float temp_diff[MON];
-  temp_diff[0] = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
-  float min_temp_diff = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
-  for( int i = 1; i < MON ; i++)
+{  
+  if(nearest_rural( urb, s, n) != -1)
   {
-    temp_diff[i] = fabs(urb.wp[i].temperature - s[min_rural].wp[i].temperature)
-    if( min_temp_diff > temp_diff[i]) min_temp_diff = temp_diff[i];
+    int min_rural = nearest_rural( urb, s, n);
+    float temp_diff[MON];
+    temp_diff[0] = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
+    float min_temp_diff = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
+    for( int i = 1; i < MON ; i++)
+    {
+      temp_diff[i] = fabs(urb.wp[i].temperature - s[min_rural].wp[i].temperature)
+      if( min_temp_diff > temp_diff[i]) min_temp_diff = temp_diff[i];
+    }
+    for( int i = 0; i < MON; i++)
+    {
+      if( temp_diff[i] == min_temp_diff) printf("%d", i+1)
+    }  
   }
-  for( int i = 0; i < MON; i++)
-  {
-    if( temp_diff[i] == min_temp_diff) printf("%d", i+1)
-  }
+  else printf("No rural station");
 }
 
 float avg_temp( station s)
@@ -196,9 +200,12 @@ void Query5( station s[], int n)
   {
     if( !s[i].up.status)
     {
-      int nearby_rural = nearest_rural( s[i], s, n);
-      float heat_island = avg_temp( s[i] ) - avg_temp(s[nearby_rural]);
-      printf("%f", heat_island);
+      if(nearest_rural( s[i], s, n) != -1)
+      {
+        int nearby_rural = nearest_rural( s[i], s, n);
+        float heat_island = avg_temp( s[i] ) - avg_temp(s[nearby_rural]);
+        printf("%f", heat_island);
+      }
     }
   }
 
