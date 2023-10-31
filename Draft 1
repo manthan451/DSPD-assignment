@@ -188,7 +188,7 @@ void Query5( station s[], int n)
        {
         int nearby_rural = nearest_rural( s[i], s, n);
         float heat_island = avg_temp( s[i] ) - avg_temp(s[nearby_rural]);
-        printf("The heat island intensity for station %d is %f", s[i].stat_number, heat_island);
+        printf("The heat island intensity for station %d is %f\n", s[i].stat_number, heat_island);
        }
     }
   }
