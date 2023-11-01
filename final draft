@@ -106,11 +106,11 @@ void Query2( station urb, station s[], int n)
     {
         int min_rural = nearest_rural( urb, s, n);
         float temp_diff[MON];
-        temp_diff[0] = (urb.wp[0].temperature - s[min_rural].wp[0].temperature);
-        float min_temp_diff = urb.wp[0].temperature - s[min_rural].wp[0].temperature;
+        temp_diff[0] = fabs((urb.wp[0].temperature - s[min_rural].wp[0].temperature));
+        float min_temp_diff = fabs(urb.wp[0].temperature - s[min_rural].wp[0].temperature);
         for( int i = 1; i < MON ; i++)
         {
-            temp_diff[i] = urb.wp[i].temperature - s[min_rural].wp[i].temperature;
+            temp_diff[i] = fabs(urb.wp[i].temperature - s[min_rural].wp[i].temperature);
             if( min_temp_diff > temp_diff[i]) min_temp_diff = temp_diff[i];
         }
         for( int i = 0; i < MON; i++)
@@ -206,9 +206,7 @@ void Query5( station s[], int n)
   
 void main()
 {
-    int n;
-    printf("Input number of regions:");
-    scanf("%d",&n);
+    int n = 5;
     station s[n];
     float temp_sum=0;
     FILE *file = fopen("input.csv", "r");
@@ -247,6 +245,7 @@ void main()
     int m;
     do
     {
+        printf("\n");
         printf("---------------------------------------------------------\n");
         printf("1.List of stations with highest no. of heat degree days\n");
         printf("2.Thermally comfortable days of selected station\n");
@@ -264,8 +263,12 @@ void main()
         else if( m == 2)
         {
             int station_no;
-            printf("Input station number for thermally comfortable days:");
-            scanf("%d",&station_no);
+            do
+            {
+                printf("Input station number for thermally comfortable days:");
+                scanf("%d",&station_no);
+                if(s[(station_no)-1].up.status != urban) printf("Input invalid\n");
+            }while( s[(station_no)-1].up.status != urban );
             Query2( s[(station_no) - 1], s, n);
         }
         else if( m == 3)
@@ -274,9 +277,13 @@ void main()
         }
         else if( m == 4)
         {
-            printf("Enter value of k:");
             int k;
-            scanf("%d",&k);
+            do
+            {
+                printf("Enter value of k:");
+                scanf("%d",&k);
+                if( k > n) printf("Input invalid\n");
+            }while(k > n);
             Query4( s, n, k);
         }
         else if( m == 5)
